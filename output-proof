@@ -1,0 +1,56 @@
+selenium@57cc5f07dbf9:/home/selenium/tests$ gradle clean
+
+BUILD SUCCESSFUL in 903ms
+1 actionable task: 1 executed
+selenium@57cc5f07dbf9:/home/selenium/tests$
+selenium@57cc5f07dbf9:/home/selenium/tests$ gradle test
+
+> Task :test
+
+FormTest > testSendBioForm STANDARD_ERROR
+    May 25, 2025 12:21:11 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+FormTest > testSendBioForm PASSED
+
+HoverTest > testHoverSettings STANDARD_ERROR
+    May 25, 2025 12:21:21 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+HoverTest > testHoverSettings PASSED
+
+LoginTest > testLogin STANDARD_ERROR
+    May 25, 2025 12:21:28 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+LoginTest > testLogin PASSED
+
+LoginTest > testLogout STANDARD_ERROR
+    May 25, 2025 12:21:34 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+LoginTest > testLogout PASSED
+
+PageTest > testReadTitle STANDARD_ERROR
+    May 25, 2025 12:21:42 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+PageTest > testReadTitle PASSED
+
+PageTest > testPageLoadSuccessfully STANDARD_ERROR
+    May 25, 2025 12:21:43 AM org.openqa.selenium.remote.ProtocolHandshake createSession
+    INFO: Detected dialect: W3C
+
+PageTest > testPageLoadSuccessfully PASSED
+
+BUILD SUCCESSFUL in 39s
+2 actionable tasks: 2 executed
+selenium@57cc5f07dbf9:/home/selenium/tests$ ^C
+selenium@57cc5f07dbf9:/home/selenium/tests$
+exit
+
+What's next?
+  Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug assignment-ubuntu-1
+  Learn more at https://docs.docker.com/go/debug-cli/
+
+C:\Users\Kovacs Milan\Downloads\assignment>
