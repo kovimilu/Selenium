@@ -21,6 +21,37 @@ RUN wget -q https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV GRADLE_HOME=/opt/gradle
 
+# Install Google Chrome
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub \
+      | gpg --dearmor > /usr/share/keyrings/google-chrome.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] \
+      http://dl.google.com/linux/chrome/deb/ stable main" \
+      > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable
+
+# Detect Chrome version, attempt major‐match, then fallback, install ChromeDriver
+RUN set -eux; \
+    CHROME_BIN="$(which google-chrome || which google-chrome-stable)"; \
+    CHROME_VERSION="$($CHROME_BIN --version \
+        | sed -E 's/.* ([0-9]+\.[0-9]+\.[0-9]+).*/\1/')"; \
+    CHROME_MAJOR="${CHROME_VERSION%%.*}"; \
+    echo "→ Chrome version: ${CHROME_VERSION}"; \
+    echo "→ Chrome major:   ${CHROME_MAJOR}"; \
+    if DRIVER_VERSION=$(curl -fsS \
+         "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR}"); then \
+        echo "→ Matched ChromeDriver: ${DRIVER_VERSION}"; \
+    else \
+        DRIVER_VERSION=$(curl -fsS \
+         https://chromedriver.storage.googleapis.com/LATEST_RELEASE); \
+        echo "→ Falling back to latest ChromeDriver: ${DRIVER_VERSION}"; \
+    fi; \
+    curl -fsS -o /tmp/chromedriver.zip \
+        "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"; \
+    unzip /tmp/chromedriver.zip -d /usr/local/bin; \
+    chmod +x /usr/local/bin/chromedriver; \
+    rm /tmp/chromedriver.zip
+
 # Add Gradle and Java to PATH
 ENV PATH=$PATH:$GRADLE_HOME/bin:$JAVA_HOME/bin
 
